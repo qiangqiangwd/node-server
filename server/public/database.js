@@ -201,13 +201,13 @@ cqqSql.prototype = {
         let sql = '';
         // Object.getOwnPropertyNames() 和 Object.keys 类似,获取对象内所有属性
         let keys = Object.keys(o_t === 'object' ? opt : opt[0]); // 想要添加数据的名称
-        sql += `INSERT INTO ${this.name}(${keys.join(',')}) value ` + this.__insertSetOpt(opt, keys, o_t);
+        sql += `INSERT INTO ${this.name}(${keys.join(',')}) value ` + this._insertSetOpt(opt, keys, o_t);
 
         console.log('insert生成的sql', sql);
         return this.query(sql);
     },
     // 转化要添加的数据，传入的参数：数据、类型
-    __insertSetOpt(resOpt, keys, o_t) {
+    _insertSetOpt(resOpt, keys, o_t) {
         let resStr = '';
         opt = o_t === 'object' ? [resOpt] : resOpt;
 
