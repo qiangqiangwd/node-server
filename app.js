@@ -5,7 +5,7 @@
 const server = require('./server/modules/server');  // 服务
 const { router } = require('./server/modules/router'); // 路由
 
-// 路由部分 文件访问的入口
+// 路由部分 静态文件访问的入口
 router.dirname = __dirname + '/src';
 
 // 开启服务
