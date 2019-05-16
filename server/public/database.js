@@ -222,7 +222,16 @@ cqqSql.prototype = {
 
         return resStr.slice(0, -1); // 去除最后一个逗号
     },
+    /**
+     *  ====== 删除 ======
+     * 1、指定删除数据的表(table_name)；
+     * 2、使用条件来指定要在WHERE子句中删除的行记录。如果行匹配条件，这些行记录将被删除。如果省略WHERE子句，DELETE语句将删除表中的所有行
+     */
+    delect(opt){
+        let sql = `DELECT ${this.name} WHERE`;
 
+        this.query(sql);
+    },
     // 创建一次连接并进行对应的数据库操作
     query(sql) {
         console.log(sql);
@@ -277,9 +286,9 @@ for (let i = 0; i < 3; i++) {
 // User.insert(optReqww).then(res1 => {
 // });
 
-User.select('').then(res => {
-    console.log('select查询结果：', res);
-});
+// User.select('').then(res => {
+//     console.log('select查询结果：', res);
+// });
 
 // User.query("SELECT email,head_img,id,last_login_time,name,register_time,sex,status FROM user WHERE id=1 OR sex=0 ORDER BY id ASC").then(res => {
 //     console.log('query查询结果：', res);
