@@ -9,14 +9,5 @@ const { router } = require('./server/modules/router'); // 路由
 router.dirname = __dirname + '/src';
 
 // 开启服务
-server.start(router.route);
-
-
-console.log('before immediate');
-
-setImmediate((arg) => {
-    console.log(`executing immediate: ${arg}`);
-}, 'so immediate');
-
-console.log('after immediate');
+server.start(router);
 

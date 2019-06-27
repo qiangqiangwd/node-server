@@ -20,7 +20,23 @@ const router = {
          * 这样可以根据返回的错误信息做不同处理
          */
         fs.readFile(filePath, 'binary', callback);
-    }
+    },
+    // 地址访问出错时操作,默认跳转404页面
+    errorFile(response){
+        let filePath = path.join(router.dirname, '404.html');  // 拼接目录路径和请求路径，组合成完整访问路径
+
+        fs.readFile(filePath, 'binary', (err, fileCotent)=>{
+            if(err){
+                console.log('未在src目录下找寻到 404.html 页面');
+                response.writeHead(404, 'not found');
+                response.end();
+                return
+            }
+
+            response.write(fileCotent, 'binary'); // 以二进制流的形式返回
+            response.end();
+        });
+    },
 };
 
 

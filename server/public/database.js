@@ -17,44 +17,6 @@ const { type } = require('./mainFun');
  *  */
 let { dbOptions } = require('./mysqOptions');
 
-
-function connect(sql) {
-    return new Promise((resolve, reject) => {
-        // 和数据库进行校验连接
-        let connection = mysql.createConnection(dbOptions);
-        // 创建连接
-        connection.connect();
-
-        // 查询数据
-        connection.query(sql, function (err, result) {
-            if (err) {
-                reject(err);
-                console.log('[SELECT ERROR] - ', err.message);
-                return;
-            }
-
-            resolve(result);
-        });
-
-        // 结束连接
-        connection.end();
-    });
-}
-
-function searchById(resBack) {
-    return new Promise((resolve, reject) => {
-        var sql = 'SELECT * FROM user';
-
-        connect(sql).then(result => {
-            console.log('--------------------------SELECT----------------------------');
-            console.log(result);
-            console.log('---------------------------end-------------------------------\n\n');
-
-            resBack && resBack(result);
-        });
-    });
-}
-
 // 所有查询表格对应参数
 const tableOptions = {
     user: {
@@ -234,7 +196,6 @@ cqqSql.prototype = {
     },
     // 创建一次连接并进行对应的数据库操作
     query(sql) {
-        console.log(sql);
         return new Promise((resolve, reject) => {
             // 和数据库进行校验连接
             let connection = mysql.createConnection(dbOptions);
@@ -259,6 +220,10 @@ cqqSql.prototype = {
     },
 }
 
+
+/**
+ *  === 使用方法展示：===
+ *  */
 let User = new cqqSql({
     name: 'user',
     notShow: ['psd', 'desc'], // 不展示数据
@@ -282,10 +247,10 @@ for (let i = 0; i < 3; i++) {
     });
 }
 
-// // 新增操作
+// 新增操作
 // User.insert(optReqww).then(res1 => {
 // });
-
+// 查询操作
 // User.select('').then(res => {
 //     console.log('select查询结果：', res);
 // });
@@ -296,5 +261,4 @@ for (let i = 0; i < 3; i++) {
 // INSERT INTO 表名 （字段名1，字段名2，...）
 // VALUES(值1，值2，...);
 
-exports.connect = connect;
-exports.searchById = searchById;
+exports.cqqSql = cqqSql;
