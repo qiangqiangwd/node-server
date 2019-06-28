@@ -17,7 +17,7 @@ const { type } = require('./mainFun');
  *  */
 let { dbOptions } = require('./mysqOptions');
 
-// 所有查询表格对应参数
+// 数据库中所有查询表格对应参数
 const tableOptions = {
     user: {
         desc: 'string',

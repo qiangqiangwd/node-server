@@ -18,7 +18,7 @@ function start(router) {
         let pathname = url.parse(request.url, true).pathname; // 获取请求路径，解析为url对象
         // console.log('请求的路径：', pathname);
         // handle 用于判断当前请求地址为请求文件还是接口
-        if (handle(pathname, request, response)){ // 当为访问文件时
+        if (serverhandle(pathname, request, response)){ // 当为访问文件时
             router.route(pathname, (err, fileCotent) => {
                 // 路由后的回调函数
                 if (err) { // 未找到文件

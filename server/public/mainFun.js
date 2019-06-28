@@ -71,7 +71,6 @@ const mainFun = {
     // 接口返回的数据
     sendData(res) {
         if (!res) return
-
         /**
          * 返回参数 data 说明：
          * 1、status 返回的状态，true为成功，false失败 （默认 true）
