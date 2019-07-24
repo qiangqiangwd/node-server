@@ -25,7 +25,8 @@ function handle(pathname, request, response) {
     if (!apiModules[pathname] && !apiModules[pathname + '/index']) { // 若果请求的不是接口而是其他
         return true
     }
-
+    // 这里可以做类似请求拦截器的操作，在请求前对所有接口做出某些操作
+    //  ...
     // console.log('请求的地址：',pathname);
     errorCallback(request, response, () => {
         // 转换接口部分的 this，注意：接口js不能用箭头函数，否则bind不会生效

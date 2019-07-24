@@ -14,11 +14,15 @@ const httpPort = 9091;  // 访问的端口（http 部分）
 // }
 
 function start(router) {
+    // 对于服务器的相关处理
     function onRequest(request, response) {
+        // 设置允许跨域
+        // response.setHeader('Access-Control-Allow-Origin', '*');
+
         let pathname = url.parse(request.url, true).pathname; // 获取请求路径，解析为url对象
         // console.log('请求的路径：', pathname);
         // handle 用于判断当前请求地址为请求文件还是接口
-        if (serverhandle(pathname, request, response)){ // 当为访问文件时
+        if (handle(pathname, request, response)){ // 当为访问文件时
             router.route(pathname, (err, fileCotent) => {
                 // 路由后的回调函数
                 if (err) { // 未找到文件
@@ -32,13 +36,15 @@ function start(router) {
     }
 
     // 开启 http
-    http.createServer(onRequest).listen(httpPort, () => {
+    let server = http.createServer(onRequest).listen(httpPort, () => {
         console.log('http 服务已开启，地址：http://localhost:' + httpPort);
     });
     // // 开启 https
     // https.createServer(httpsOption, onRequest).listen(httpsPort, function () {
     //     console.log('https 服务已开启，地址：https://localhost:' + httpsPort);
     // });
+
+    return server
 }
 
 exports.start = start;

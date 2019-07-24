@@ -9,5 +9,9 @@ const { router } = require('./server/modules/router'); // 路由
 router.dirname = __dirname + '/src';
 
 // 开启服务
-server.start(router);
+const startServer = server.start(router);
+
+// 开启 socket 服务
+const { startSocket } = require('./server/public/sockit/socket.io');
+startSocket(startServer);
 

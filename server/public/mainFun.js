@@ -50,7 +50,7 @@ const mainFun = {
         });
     },
 
-    // 当接口发生错误时的返回错误提示
+    // 当接口发生错误时的返回错误提示 【确保不会一出错整个服务就断了】
     errorCallback(req, res, callback) {
         if (!res || !req) return
         try {
