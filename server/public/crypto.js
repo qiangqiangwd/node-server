@@ -72,7 +72,7 @@ function judgeToken(uid, callback = () => { }) {
     User.select(uidData[0]).then(arr => {
         // console.log('获取到的用户参数：', arr, uidData);
         // 校验 uid 是否在有效期内
-        let time = (new Date()).getTime(); //  获取当前时间戳
+        let time = Math.floor((new Date()).getTime() / 1000); //  获取当前时间戳（11位）
         // 设定过期时间为7天后
         let compare = time - uidData[1]; 
         if (compare > (7 * 24 * 3600000)) { 
