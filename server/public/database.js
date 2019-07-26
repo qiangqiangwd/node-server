@@ -7,20 +7,20 @@ const mysql = require('mysql');
 // 当发生错误时的回调
 const { type } = require('./mainFun');
 /**
- * 连接数据库所需要的信息（数据库相关数据），例如：
- * dbOptions = {
- *  host: 'localhost',
- *  user: 'root',
- *  password: '123456',
- *  database: 'blog'
- * }
+ * 连接数据库所需要的信息（数据库相关数据）
  *  */
-let { dbOptions } = require('./mysqOptions');
+// let { dbOptions } = require('./mysqOptions');
+const dbOptions = {
+    host: 'localhost',
+    user: 'root',
+    password: 'admin',
+    database: 'blog'
+}
 
 // 数据库中所有查询表格对应参数
 const tableOptions = {
     user: {
-        desc: 'string',
+        description: 'string',
         email: 'string',
         head_img: 'string',
         id: 'number',
@@ -31,6 +31,16 @@ const tableOptions = {
         sex: 'number',
         status: 'number',
     },
+    comment:{
+        id: 'number',
+        user_id: 'number',
+        content: 'string',
+        time: 'number',
+        linked_comment_id: 'number',
+        linked_user_id: 'number',
+        liked: 'number',
+        dislike: 'number',
+    }
 }
 
 /**

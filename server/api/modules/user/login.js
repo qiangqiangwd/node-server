@@ -4,10 +4,10 @@
  */
 let { aseEncode } = require('../../../public/crypto');
 function login(req, res){
-    // let params = getQuery(req); // get 获取参数（同步获取）
+    // let params = this.getQuery(req); // get 获取参数（同步获取）
     let User = new this.cqqSql({
         name:'user',
-        notShow: ['psd', 'desc'], // 不展示数据
+        notShow: ['psd'], // 不展示数据
     });
 
     // post 参数为（异步获取）

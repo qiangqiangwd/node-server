@@ -66,7 +66,7 @@ function judgeToken(uid, callback = () => { }) {
     //  进行数据库初始化
     let User = new cqqSql({
         name: 'user',
-        notShow: ['psd', 'desc'], // 不展示数据
+        notShow: ['psd'], // 不展示数据
     });
     uidData = JSON.parse(uidData);
     User.select(uidData[0]).then(arr => {
