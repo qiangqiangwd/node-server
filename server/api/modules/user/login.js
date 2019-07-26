@@ -4,17 +4,10 @@
  */
 let { aseEncode } = require('../../../public/crypto');
 function login(req, res){
-<<<<<<< HEAD
     // let params = this.getQuery(req); // get 获取参数（同步获取）
     let User = new this.cqqSql({
         name:'user',
         notShow: ['psd'], // 不展示数据
-=======
-    // let params = getQuery(req); // get 获取参数（同步获取）
-    let User = new this.cqqSql({
-        name:'user',
-        notShow: ['psd', 'desc'], // 不展示数据
->>>>>>> 0681023ddab47da66df38dc74cc50df53587dfcd
     });
 
     // post 参数为（异步获取）
@@ -32,11 +25,7 @@ function login(req, res){
                 let resData = {
                     userInfo: result[0],
                     // 生成 uid 参数：id、生成时间戳（11为）
-<<<<<<< HEAD
                     CQUID: aseEncode(JSON.stringify([result[0].id, Math.floor((new Date()).getTime() / 1000)]))
-=======
-                    COUID: aseEncode(JSON.stringify([result[0].id, Math.floor((new Date()).getTime() / 1000)]))
->>>>>>> 0681023ddab47da66df38dc74cc50df53587dfcd
                 }
                 this.sendData(res, { data: resData, status: true, msg: '登录成功' });
             }else{

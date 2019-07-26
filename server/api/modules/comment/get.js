@@ -17,11 +17,22 @@ function getComment(req, res) {
     comment.query("SELECT c.*,(SELECT NAME FROM USER WHERE id = c.`linked_user_id`) AS linked_user_name,(SELECT head_img FROM USER WHERE id = c.`linked_user_id`) AS linked_head_img,u.`name`,u.`head_img` FROM COMMENT c,USER u WHERE c.`user_id` = u.`id` LIMIT " + pageStr).then(result => {
         // 对返回的评论数据进行分级（这里只包含；两级）
         let firstLevel = result.filter(r => !r.linked_user_id); // 不包含有关联用户id时为第一级
-        firstLevel.forEach((item,index) => {
-            let second_comment = result.filter(r => item.id == r.linked_comment_id);
-            firstLevel[index].second_comment = [...second_comment];
-        });
-        
+
+        if (firstLevel.length > 0){ // 若包含 一级评论
+            // 进行排序（离现在最近的在前面）
+            firstLevel = firstLevel.sort((a, b) => a.create_time < b.create_time); 
+
+            firstLevel.forEach((item, index) => {
+                let second_comment = result.filter(r => item.id == r.linked_comment_id);
+                firstLevel[index].second_comment = [];
+                if (second_comment.length > 0) {
+                    // 时间从早到晚排序
+                    firstLevel[index].second_comment.push(...second_comment.sort((a, b) => a.create_time > b.create_time));
+                }
+            });
+        }
+
+
         // 获取评论总的数量
         comment.query(`SELECT COUNT(*) FROM COMMENT`).then(count => {
             // 返回的结果

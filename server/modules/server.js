@@ -17,11 +17,7 @@ function start(router) {
     // 对于服务器的相关处理
     function onRequest(request, response) {
         // 设置允许跨域
-<<<<<<< HEAD
-        // response.setHeader('Access-Control-Allow-Origin', '*');
-=======
         response.setHeader('Access-Control-Allow-Origin', '*');
->>>>>>> 0681023ddab47da66df38dc74cc50df53587dfcd
 
         let pathname = url.parse(request.url, true).pathname; // 获取请求路径，解析为url对象
         // console.log('请求的路径：', pathname);
