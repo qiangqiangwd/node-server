@@ -14,7 +14,7 @@ function getComment(req, res) {
 
     // 进行查询
     // 这里添加了虚拟数据（linked_user_name：关联用户的姓名 linked_head_img：关联用户的头像）
-    comment.query("SELECT c.*,(SELECT NAME FROM USER WHERE id = c.`linked_user_id`) AS linked_user_name,(SELECT head_img FROM USER WHERE id = c.`linked_user_id`) AS linked_head_img,u.`name`,u.`head_img` FROM COMMENT c,USER u WHERE c.`user_id` = u.`id` LIMIT " + pageStr).then(result => {
+    comment.query("SELECT c.*,(SELECT NAME FROM USER WHERE id = c.`linked_user_id`) AS linked_user_name,(SELECT head_img FROM USER WHERE id = c.`linked_user_id`) AS linked_head_img,u.`name`,u.`head_img` FROM COMMENT c,USER u WHERE c.`user_id` = u.`id` ORDER BY c.`create_time` DESC LIMIT " + pageStr).then(result => {
         // 对返回的评论数据进行分级（这里只包含；两级）
         let firstLevel = result.filter(r => !r.linked_user_id); // 不包含有关联用户id时为第一级
 

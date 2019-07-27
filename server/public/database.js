@@ -175,7 +175,7 @@ cqqSql.prototype = {
         let keys = Object.keys(o_t === 'object' ? opt : opt[0]); // 想要添加数据的名称
         sql += `INSERT INTO ${this.name}(${keys.join(',')}) value ` + this._insertSetOpt(opt, keys, o_t);
 
-        console.log('insert生成的sql', sql);
+        // console.log('insert生成的sql', sql);
         return this.query(sql);
     },
     // 转化要添加的数据，传入的参数：数据、类型
@@ -187,7 +187,7 @@ cqqSql.prototype = {
             let arr = [];
             for (let j = 0; j < keys.length; j++) {
                 let o = opt[i][keys[j]];
-                arr.push(type(o) === 'string' ? `"${o}"` : o); // 若为字符串则添加上引号
+                arr.push(type(o) === 'string' ? `"${o}"` : (o ? o : 'NULL')); // 若为字符串则添加上引号
             }
             resStr += `(${arr.join(',')}),`;
         }
