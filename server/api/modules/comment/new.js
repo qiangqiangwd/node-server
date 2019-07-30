@@ -28,7 +28,7 @@ function getComment(req, res) {
                 create_time: Math.floor((new Date()).getTime() / 1000), // 创建时间，取 10 位数
                 linked_comment_id: params.linked_comment_id || null, // 关联评论id
                 linked_user_id: params.linked_user_id || null, // 关联用户id
-                linked_article_id: null // 关联文章id【这里不用】
+                linked_article_id: params.linked_article_id || null // 关联文章id【这里暂不用】
             };
             // 进行新增
             comment.insert(commentOpt).then(dbRes => {

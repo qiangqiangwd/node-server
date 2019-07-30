@@ -31,11 +31,11 @@ const tableOptions = {
         sex: 'number',
         status: 'number',
     },
-    comment:{
+    comment: {
         id: 'number',
         user_id: 'number',
         content: 'string',
-        time: 'number',
+        create_time: 'number',
         linked_comment_id: 'number',
         linked_user_id: 'number',
         liked: 'number',
@@ -196,16 +196,55 @@ cqqSql.prototype = {
     },
     /**
      *  ====== 删除 ======
-     * 1、指定删除数据的表(table_name)；
-     * 2、使用条件来指定要在WHERE子句中删除的行记录。如果行匹配条件，这些行记录将被删除。如果省略WHERE子句，DELETE语句将删除表中的所有行
+     * 1、删除的条件（若无条件删除全部！！）
+     * xxx.delete({id:1}).then(...)
      */
-    delect(opt){
-        let sql = `DELECT ${this.name} WHERE`;
+    delete(condition) {
+        let sql = `DELETE FROM ${this.name} `;
+        // 添加删除条件
+        if (condition) {
+            if (typeof condition === 'object') { // 若传入的为对象，默认 where
+                sql += 'WHERE' + this._objChangeStr(condition, 'AND');
+            } else {
+                sql += condition;
+            }
+        }
 
-        this.query(sql);
+        return this.query(sql);
+    },
+    /**
+    *  ====== 更改 ======
+    * 1、改变的参数
+    * 2、条件（若无条件则是全部更改）
+    * xxx.update({changeData:'..'},{id:1}).then(...)
+    */
+    update(changeOpt, condition) {
+        let sql = `UPDATE ${this.name} SET`;
+        if (!changeOpt && typeof changeOpt === 'object') return // 若无改变参数且其不为对象则不执行
+        sql += this._objChangeStr(changeOpt); // 添加更改条件
+
+        if (condition) {
+            if (typeof condition === 'object') { // 若传入的为对象，默认 where
+                sql += 'WHERE' + this._objChangeStr(condition);
+            } else {
+                sql += condition;
+            }
+        }
+
+        return this.query(sql);
+    },
+    // 对对象参数转化为对应数据
+    _objChangeStr(opt, conStr = ',') {
+        let str = '';
+        Object.keys(opt).forEach(item => {
+            str += ` ${item}=${opt[item]} ${conStr}`;
+        });
+        str = str.slice(0, 0 - conStr.length) + ' '; // 去除最后一个 ,
+        return str
     },
     // 创建一次连接并进行对应的数据库操作
     query(sql) {
+        // console.log(sql);
         return new Promise((resolve, reject) => {
             // 和数据库进行校验连接
             let connection = mysql.createConnection(dbOptions);

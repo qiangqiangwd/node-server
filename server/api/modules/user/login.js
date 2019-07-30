@@ -22,12 +22,16 @@ function login(req, res){
             psd: params.psd,
         }).then(result => {
             if (result.length > 0){
+                let loginTime = Math.floor((new Date()).getTime() / 1000); // 当前登录时间
                 let resData = {
                     userInfo: result[0],
                     // 生成 uid 参数：id、生成时间戳（11为）
-                    CQUID: aseEncode(JSON.stringify([result[0].id, Math.floor((new Date()).getTime() / 1000)]))
+                    CQUID: aseEncode(JSON.stringify([result[0].id, loginTime]))
                 }
-                this.sendData(res, { data: resData, status: true, msg: '登录成功' });
+                // 刷新最后登录时间
+                User.update({ last_login_time: loginTime }, { id: result[0].id }).then(t => {
+                    this.sendData(res, { data: resData, status: true, msg: '登录成功' });
+                });
             }else{
                 this.sendData(res, { data: null, status: false, msg: '邮箱或密码错误' });
             }
